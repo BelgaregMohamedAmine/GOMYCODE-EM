@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Insight Hub - Rapport d'Étude de Marché 2024</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            border-right: 1px solid #222;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #888;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover {
+            background: rgba(0, 242, 254, 0.1);
+            color: #00f2fe;
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2) 0%, rgba(79, 172, 254, 0.2) 100%);
+            color: #00f2fe;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 3rem 2rem;
+            max-width: 1400px;
+        }
+
+        .header {
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #888;
+        }
+
+        .owner-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(79, 172, 254, 0.1);
+            border-left: 3px solid #4facfe;
+            border-radius: 4px;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #00f2fe;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #00f2fe;
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #222;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #4facfe;
+            box-shadow: 0 5px 20px rgba(79, 172, 254, 0.15);
+        }
+
+        .card h3 {
+            color: #00f2fe;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .chart-container {
+            background: #0f0f0f;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid #222;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+        }
+
+        .competitor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .competitor-table th {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2) 0%, rgba(79, 172, 254, 0.2) 100%);
+            color: #00f2fe;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .competitor-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #222;
+        }
+
+        .competitor-table tr:hover {
+            background: rgba(0, 242, 254, 0.05);
+        }
+
+        .insight-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .insight-list li {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: rgba(79, 172, 254, 0.1);
+            border-left: 3px solid #4facfe;
+            border-radius: 4px;
+        }
+
+        .insight-list li strong {
+            color: #00f2fe;
+        }
+
+        .prompt-box {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 2px solid #00f2fe;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .prompt-box::before {
+            content: '🤖 PROMPT IA';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #0a0a0a;
+            padding: 0 10px;
+            color: #00f2fe;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .prompt-content {
+            background: #000;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #00f2fe;
+            line-height: 1.8;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: #0a0a0a;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: #0a0a0a;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 242, 254, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.6);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: #0a0a0a;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 2rem 1rem;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">AI Insight Hub</div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#introduction" class="nav-link active">Introduction</a></li>
+                    <li class="nav-item"><a href="#marche" class="nav-link">Analyse du Marché</a></li>
+                    <li class="nav-item"><a href="#concurrence" class="nav-link">Analyse Concurrentielle</a></li>
+                    <li class="nav-item"><a href="#clients" class="nav-link">Profil des Clients</a></li>
+                    <li class="nav-item"><a href="#insights" class="nav-link">Insights & Prévisions</a></li>
+                    <li class="nav-item"><a href="#recommandations" class="nav-link">Recommandations</a></li>
+                    <li class="nav-item"><a href="#prompt" class="nav-link">Prompt IA Utilisé</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Rapport d'Étude de Marché</h1>
+                <p class="subtitle">Plateforme SaaS de Visualisation de Données propulsée par l'IA</p>
+                <div class="owner-info">
+                    <strong>Propriétaire :</strong> Belgareg Mohamed Amine<br>
+                    <strong>Date :</strong> Décembre 2024
+                </div>
+            </header>
+
+            <section id="introduction">
+                <h2 class="section-title">1. Introduction</h2>
+                
+                <div class="card">
+                    <h3>Présentation du Projet</h3>
+                    <p><strong>AI Insight Hub</strong> est une plateforme SaaS innovante qui révolutionne la visualisation de données en exploitant la puissance de l'intelligence artificielle. Notre solution transforme des ensembles de données complexes en visualisations intuitives et interactives, permettant aux entreprises de tous secteurs de prendre des décisions éclairées plus rapidement.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>Proposition de Valeur Unique :</strong></p>
+                    <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                        <li>Visualisations automatiques alimentées par l'IA qui s'adaptent à vos données</li>
+                        <li>Interface conversationnelle en langage naturel pour l'analyse de données</li>
+                        <li>Tableaux de bord en temps réel avec insights prédictifs</li>
+                        <li>Intégration transparente avec vos sources de données existantes</li>
+                        <li>Collaboration d'équipe avec partage sécurisé</li>
+                    </ul>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">$11.13B</div>
+                        <div class="stat-label">Taille du marché mondial 2025</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">13.6%</div>
+                        <div class="stat-label">TCAC 2025-2035</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">83%</div>
+                        <div class="stat-label">Entreprises utilisant des dashboards pour décider</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$40.16B</div>
+                        <div class="stat-label">Marché prévu en 2035</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="marche">
+                <h2 class="section-title">2. Analyse du Marché</h2>
+
+                <div class="card">
+                    <h3>Taille et Croissance du Marché</h3>
+                    <p>Le marché mondial de la visualisation de données d'entreprise connaît une croissance exceptionnelle, soutenue par la transformation numérique et l'adoption massive du cloud computing. En 2024, le marché a été évalué à 9,75 milliards USD et devrait atteindre 40,16 milliards USD d'ici 2035.</p>
+                    
+                    <p style="margin-top: 1rem;">Le segment SaaS IA spécifique connaît une expansion encore plus rapide avec un TCAC de 38,1%, propulsé par la demande croissante d'analytique en temps réel et d'insights automatisés.</p>
+                </div>
+
+                <div class="chart-container">
+                    <h3 style="color: #00f2fe; margin-bottom: 1rem;">Évolution du Marché de la Visualisation de Données (2024-2035)</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="marketGrowthChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Tendances Principales</h3>
+                    <ul class="insight-list">
+                        <li><strong>IA et ML Intégrés :</strong> 47% des outils de visualisation intègrent désormais des fonctionnalités basées sur l'IA pour l'analyse automatique et les recommandations personnalisées.</li>
+                        <li><strong>Analyse en Temps Réel :</strong> 77% des organisations soulignent le besoin crucial de visualisation en temps réel pour des décisions rapides.</li>
+                        <li><strong>Cloud-First :</strong> 62% des déploiements sont maintenant basés sur le cloud, offrant scalabilité et accessibilité.</li>
+                        <li><strong>Langage Naturel :</strong> 35% des plateformes offrent désormais des requêtes en langage naturel, démocratisant l'accès aux données.</li>
+                        <li><strong>Visualisation Mobile :</strong> Croissance de 34% de l'adoption mobile, avec 49% des entreprises mobile-first priorisant les dashboards analytics.</li>
+                    </ul>
+                </div>
+
+                <div class="chart-container">
+                    <h3 style="color: #00f2fe; margin-bottom: 1rem;">Répartition des Segments de Marché</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="segmentChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="concurrence">
+                <h2 class="section-title">3. Analyse Concurrentielle</h2>
+
+                <div class="card">
+                    <h3>Principaux Concurrents</h3>
+                    <table class="competitor-table">
+                        <thead>
+                            <tr>
+                                <th>Concurrent</th>
+                                <th>Part de Marché</th>
+                                <th>Forces</th>
+                                <th>Faiblesses</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Microsoft Power BI</strong></td>
+                                <td>36%</td>
+                                <td>Intégration Microsoft, prix compétitif, IA Copilot</td>
+                                <td>Complexité pour grands datasets, courbe d'apprentissage</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tableau (Salesforce)</strong></td>
+                                <td>20%</td>
+                                <td>Visualisations avancées, communauté forte, analytics embarqués</td>
+                                <td>Prix élevé, nécessite expertise technique</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Qlik Sense</strong></td>
+                                <td>10%</td>
+                                <td>Moteur associatif, streaming temps réel, hybrid cloud</td>
+                                <td>Part de marché en déclin, interface moins intuitive</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Looker (Google)</strong></td>
+                                <td>6%</td>
+                                <td>Intégration GCP, LookML puissant, analytics embarqués</td>
+                                <td>Pas end-to-end, courbe d'apprentissage élevée</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Domo</strong></td>
+                                <td>4%</td>
+                                <td>Interface intuitive, connecteurs nombreux, IA intégrée</td>
+                                <td>Prix premium, fonctionnalités avancées complexes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="chart-container">
+                    <h3 style="color: #00f2fe; margin-bottom: 1rem;">Parts de Marché des Principaux Acteurs</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="competitorChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Positionnement Stratégique d'AI Insight Hub</h3>
+                    <p><strong>Notre Avantage Concurrentiel :</strong></p>
+                    <ul class="insight-list">
+                        <li><strong>IA Native :</strong> Contrairement aux concurrents qui ajoutent l'IA après coup, AI Insight Hub est construit autour de l'intelligence artificielle dès sa conception.</li>
+                        <li><strong>Simplicité d'Utilisation :</strong> Interface conversationnelle en langage naturel accessible aux utilisateurs non-techniques.</li>
+                        <li><strong>Prix Compétitif :</strong> Modèle SaaS flexible avec tarification transparente, sans coûts cachés.</li>
+                        <li><strong>Insights Automatiques :</strong> Génération automatique de narratives et recommandations basées sur vos données.</li>
+                        <li><strong>Agilité :</strong> En tant que nouvelle entrée, capacité d'innovation rapide sans legacy systems.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="clients">
+                <h2 class="section-title">4. Profil des Clients</h2>
+
+                <div class="card">
+                    <h3>Segments Cibles Prioritaires</h3>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #00f2fe; margin-bottom: 0.5rem;">1. PME Tech-Forward (20-250 employés)</h4>
+                        <p><strong>Besoins :</strong> Solutions abordables, faciles à déployer, sans expertise technique requise</p>
+                        <p><strong>Points de Douleur :</strong> Budgets limités, équipes IT réduites, besoin de ROI rapide</p>
+                        <p><strong>Critères de Décision :</strong> Prix, facilité d'utilisation, support client, scalabilité</p>
+                    </div>
+
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #00f2fe; margin-bottom: 0.5rem;">2. Départements Analytics d'Entreprises (500+ employés)</h4>
+                        <p><strong>Besoins :</strong> Analytics avancés, intégrations multiples, gouvernance des données</p>
+                        <p><strong>Points de Douleur :</strong> Silos de données, dashboards obsolètes, manque d'insights en temps réel</p>
+                        <p><strong>Critères de Décision :</strong> Sécurité, conformité, intégrations, support entreprise</p>
+                    </div>
+
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #00f2fe; margin-bottom: 0.5rem;">3. Startups Data-Driven</h4>
+                        <p><strong>Besoins :</strong> Rapidité de déploiement, flexibilité, analytics self-service</p>
+                        <p><strong>Points de Douleur :</strong> Croissance rapide, équipes distribuées, besoin d'agilité</p>
+                        <p><strong>Critères de Décision :</strong> Innovation, API robustes, pricing flexible, communauté</p>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 style="color: #00f2fe; margin-bottom: 1rem;">Besoins Clients Prioritaires (Radar Chart)</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="needsRadarChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Personas Types</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                        <div style="background: rgba(79, 172, 254, 0.1); padding: 1.5rem; border-radius: 8px;">
+                            <h4 style="color: #00f2fe;">Sophie - Directrice Marketing</h4>
+                            <p style="margin-top: 0.5rem; font-size: 0.9rem;">PME e-commerce, 35 ans. Besoin de suivre KPIs marketing en temps réel sans dépendre de l'IT. Budget limité, recherche facilité d'utilisation.</p>
+                        </div>
+                        <div style="background: rgba(79, 172, 254, 0.1); padding: 1.5rem; border-radius: 8px;">
+                            <h4 style="color: #00f2fe;">Marc - CDO</h4>
+                            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Grande entreprise finance, 45 ans. Gère équipe de 20 data analysts. Cherche à démocratiser l'accès aux données tout en maintenant gouvernance.</p>
+                        </div>
+                        <div style="background: rgba(79, 172, 254, 0.1); padding: 1.5rem; border-radius: 8px;">
+                            <h4 style="color: #00f2fe;">Alex - CEO Startup</h4>
+                            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Startup SaaS B2B, 32 ans. Besoin d'insights produit en temps réel pour pivoter rapidement. Veut outillage moderne et évolutif.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="insights">
+                <h2 class="section-title">5. Insights & Prévisions</h2>
+
+                <div class="card">
+                    <h3>Opportunités de Croissance</h3>
+                    
+                    <h4 style="color: #00f2fe; margin-top: 1.5rem;">Sectorielle</h4>
+                    <ul class="insight-list">
+                        <li><strong>Healthcare :</strong> Croissance de 50% d'adoption ML pour diagnostic prédictif et analytics patient. Opportunité de spécialisation verticale.</li>
+                        <li><strong>Retail & E-commerce :</strong> Segment dominant avec besoins critiques en analytics client et optimisation conversion. Marché mature mais en forte croissance.</li>
+                        <li><strong>Finance & Banque :</strong> Demande élevée pour analytics en temps réel et conformité réglementaire. Barrières à l'entrée élevées mais valeur client forte.</li>
+                        <li><strong>Manufacturing :</strong> 29% d'adoption en entreprises 500+ employés pour optimisation opérationnelle. Secteur en transformation digitale.</li>
+                    </ul>
+
+                    <h4 style="color: #00f2fe; margin-top: 1.5rem;">Géographique</h4>
+                    <ul class="insight-list">
+                        <li><strong>Amérique du Nord :</strong> Marché dominant (39% part mondiale), 7,4M utilisateurs entreprise. Adoption mature, compétition forte.</li>
+                        <li><strong>Europe :</strong> 28% part mondiale, forte demande RGPD-compliant. Allemagne, France, UK représentent 72% déploiements régionaux.</li>
+                        <li><strong>Asie-Pacifique :</strong> Croissance la plus rapide (24% part), 5,6M utilisateurs Chine+Inde. Écosystème startup dynamique avec 900M$ investis.</li>
+                    </ul>
+                </div>
+
+                <div class="chart-container">
+                    <h3 style="color: #00f2fe; margin-bottom: 1rem;">Tendances Émergentes 2024-2027</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="trendsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Tendances à Surveiller</h3>
+                    <ul class="insight-list">
+                        <li><strong>IA Générative Conversationnelle :</strong> 70% des leaders BI voient l'IA comme différenciateur clé. Adoption rapide des interfaces naturelles.</li>
+                        <li><strong>Analytics Agentique :</strong> Émergence d'agents IA autonomes capables de raisonnement, planification et action sur données structurées/non-structurées.</li>
+                        <li><strong>Visualisation Immersive :</strong> AR/VR pour data viz 3D, particulièrement en manufacturing et design. Marché niche mais croissance forte.</li>
+                        <li><strong>Data Democratization :</strong> 67% des leaders ont faible confiance dans leurs analytics actuels. Demande forte pour self-service accessible.</li>
+                        <li><strong>Edge Computing :</strong> Traitement données à la source pour latence minimale. Investissement 5,9B$ en 2024, accélérateur critique pour IA.</li>
+                        <li><strong>Serverless & Automatisation :</strong> Réduction drastique coûts opérationnels. Amazon Bedrock offre désormais accès modèles IA en serverless.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="recommandations">
+                <h2 class="section-title">6. Recommandations Stratégiques</h2>
+
+                <div class="card">
+                    <h3>Positionnement Recommandé</h3>
+                    <p><strong>"L'Analytics IA Accessible à Tous"</strong></p>
+                    <p style="margin-top: 1rem;">Positionnement différencié axé sur la démocratisation de l'analytics avancé. Contrairement aux solutions enterprise complexes (Tableau, Qlik) ou aux plateformes grand public limitées, AI Insight Hub se positionne comme le pont intelligent entre simplicité et puissance.</p>
+                    
+                    <div style="background: rgba(0, 242, 254, 0.1); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                        <strong style="color: #00f2fe;">Message Clé :</strong>
+                        <p style="margin-top: 0.5rem;">"Transformez vos données en décisions en 3 clics. Pas de code, pas de formation, juste des insights."</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Stratégie Produit</h3>
+                    
+                    <h4 style="color: #00f2fe; margin-bottom: 1rem;">Phase 1 (Mois 1-6) : MVP & Product-Market Fit</h4>
+                    <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                        <li>Interface conversationnelle en langage naturel</li>
+                        <li>Connecteurs essentiels (CSV, Excel, PostgreSQL, MySQL, Google Sheets)</li>
+                        <li>Visualisations automatiques intelligentes (10+ types de charts)</li>
+                        <li>Dashboards personnalisables avec drag-and-drop</li>
+                        <li>Export PDF/PNG et partage sécurisé</li>
+                    </ul>
+
+                    <h4 style="color: #00f2fe; margin-bottom: 1rem;">Phase 2 (Mois 7-12) : Expansion Fonctionnelle</h4>
+                    <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                        <li>Intégrations business apps (Salesforce, HubSpot, Stripe, Shopify)</li>
+                        <li>Analytics prédictifs et forecasting</li>
+                        <li>Alertes intelligentes et anomaly detection</li>
+                        <li>Collaboration temps réel (commentaires, annotations)</li>
+                        <li>API publique pour embedded analytics</li>
+                    </ul>
+
+                    <h4 style="color: #00f2fe; margin-bottom: 1rem;">Phase 3 (Année 2) : Enterprise & Vertical</h4>
+                    <ul style="margin-left: 2rem;">
+                        <li>Templates verticaux (Retail, Finance, Healthcare)</li>
+                        <li>White-label et embedded options</li>
+                        <li>Data governance avancée (RBAC, audit logs)</li>
+                        <li>On-premise / hybrid deployment</li>
+                        <li>AI Agents autonomes pour analytics proactifs</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Stratégie Pricing</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                        <div style="background: rgba(79, 172, 254, 0.1); padding: 1.5rem; border-radius: 8px; border: 2px solid #4facfe;">
+                            <h4 style="color: #00f2fe; margin-bottom: 0.5rem;">Starter</h4>
+                            <div style="font-size: 2rem; font-weight: 700; color: #00f2fe; margin: 1rem 0;">29€/mois</div>
+                            <ul style="font-size: 0.9rem; line-height: 1.8;">
+                                <li>3 utilisateurs</li>
+                                <li>10 dashboards</li>
+                                <li>Connecteurs basiques</li>
+                                <li>IA générative (50 requêtes/mois)</li>
+                                <li>Support email</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(79, 172, 254, 0.2)); padding: 1.5rem; border-radius: 8px; border: 3px solid #00f2fe;">
+                            <div style="background: #00f2fe; color: #0a0a0a; padding: 0.3rem 0.8rem; border-radius: 20px; display: inline-block; font-size: 0.8rem; font-weight: 700;">POPULAIRE</div>
+                            <h4 style="color: #00f2fe; margin-top: 0.5rem; margin-bottom: 0.5rem;">Professional</h4>
+                            <div style="font-size: 2rem; font-weight: 700; color: #00f2fe; margin: 1rem 0;">99€/mois</div>
+                            <ul style="font-size: 0.9rem; line-height: 1.8;">
+                                <li>15 utilisateurs</li>
+                                <li>Dashboards illimités</li>
+                                <li>Tous les connecteurs</li>
+                                <li>IA générative illimitée</li>
+                                <li>Analytics prédictifs</li>
+                                <li>API access</li>
+                                <li>Support prioritaire</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: rgba(79, 172, 254, 0.1); padding: 1.5rem; border-radius: 8px; border: 2px solid #4facfe;">
+                            <h4 style="color: #00f2fe; margin-bottom: 0.5rem;">Enterprise</h4>
+                            <div style="font-size: 2rem; font-weight: 700; color: #00f2fe; margin: 1rem 0;">Sur Devis</div>
+                            <ul style="font-size: 0.9rem; line-height: 1.8;">
+                                <li>Utilisateurs illimités</li>
+                                <li>White-label</li>
+                                <li>SSO / SAML</li>
+                                <li>Gouvernance avancée</li>
+                                <li>SLA 99.9%</li>
+                                <li>Dedicated success manager</li>
+                                <li>Déploiement on-premise</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Stratégie Go-to-Market</h3>
+                    
+                    <h4 style="color: #00f2fe; margin-bottom: 1rem;">Canaux d'Acquisition</h4>
+                    <ul class="insight-list">
+                        <li><strong>Content Marketing (30% budget) :</strong> Blog SEO-optimisé, tutorials vidéo, webinars mensuels, case studies. Objectif : 50K visites/mois M12.</li>
+                        <li><strong>Product-Led Growth (25% budget) :</strong> Freemium 14 jours, onboarding interactif, viral loops (invitations équipe). Taux de conversion cible : 3-5%.</li>
+                        <li><strong>Partnerships (20% budget) :</strong> Intégrations marketplace (Salesforce AppExchange, Shopify App Store), revendeurs consultants BI.</li>
+                        <li><strong>Paid Acquisition (15% budget) :</strong> Google Ads (requêtes high-intent), LinkedIn Ads (targeting décideurs), retargeting intelligent.</li>
+                        <li><strong>Community (10% budget) :</strong> Programme ambassador, Slack/Discord community, événements locaux data & AI.</li>
+                    </ul>
+
+                    <h4 style="color: #00f2fe; margin-top: 1.5rem; margin-bottom: 1rem;">Timeline de Lancement</h4>
+                    <div style="background: rgba(0, 242, 254, 0.05); padding: 1.5rem; border-left: 3px solid #00f2fe; border-radius: 4px;">
+                        <p><strong>Q1 2025 :</strong> Beta privée avec 50 early adopters, itérations rapides, feedback loops</p>
+                        <p style="margin-top: 0.5rem;"><strong>Q2 2025 :</strong> Launch public avec Product Hunt, campagne PR tech média</p>
+                        <p style="margin-top: 0.5rem;"><strong>Q3 2025 :</strong> Expansion SMB avec focus acquisition scalable</p>
+                        <p style="margin-top: 0.5rem;"><strong>Q4 2025 :</strong> Première offre Enterprise, partnerships stratégiques</p>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 style="color: #00f2fe; margin-bottom: 1rem;">Allocation Budgétaire Recommandée (Année 1)</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>KPIs & Objectifs Année 1</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div style="text-align: center; padding: 1.5rem; background: rgba(0, 242, 254, 0.1); border-radius: 8px;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #00f2fe;">500</div>
+                            <div style="color: #888; margin-top: 0.5rem;">Clients Payants</div>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: rgba(0, 242, 254, 0.1); border-radius: 8px;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #00f2fe;">€400K</div>
+                            <div style="color: #888; margin-top: 0.5rem;">ARR (Annual Recurring Revenue)</div>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: rgba(0, 242, 254, 0.1); border-radius: 8px;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #00f2fe;">4%</div>
+                            <div style="color: #888; margin-top: 0.5rem;">Churn Mensuel</div>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: rgba(0, 242, 254, 0.1); border-radius: 8px;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #00f2fe;">120%</div>
+                            <div style="color: #888; margin-top: 0.5rem;">Net Revenue Retention</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Risques & Mitigation</h3>
+                    
+                    <table class="competitor-table">
+                        <thead>
+                            <tr>
+                                <th>Risque</th>
+                                <th>Impact</th>
+                                <th>Probabilité</th>
+                                <th>Stratégie de Mitigation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Réponse agressive des incumbents (Microsoft, Tableau)</td>
+                                <td>Élevé</td>
+                                <td>Moyen</td>
+                                <td>Focus niche SMB, différenciation forte IA, agilité innovation</td>
+                            </tr>
+                            <tr>
+                                <td>Évolution rapide technologie IA</td>
+                                <td>Élevé</td>
+                                <td>Élevé</td>
+                                <td>Architecture modulaire, partnerships avec fournisseurs LLM</td>
+                            </tr>
+                            <tr>
+                                <td>Adoption lente marché target</td>
+                                <td>Moyen</td>
+                                <td>Moyen</td>
+                                <td>PLG avec freemium, onboarding frictionless, quick wins</td>
+                            </tr>
+                            <tr>
+                                <td>Problèmes de sécurité/confidentialité données</td>
+                                <td>Critique</td>
+                                <td>Faible</td>
+                                <td>Certifications SOC 2, RGPD by design, encryption end-to-end</td>
+                            </tr>
+                            <tr>
+                                <td>Difficultés levée de fonds</td>
+                                <td>Élevé</td>
+                                <td>Moyen</td>
+                                <td>Bootstrap initial, focus profitabilité rapide, métriques solides</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(79, 172, 254, 0.15)); border: 2px solid #00f2fe;">
+                    <h3 style="text-align: center;">🎯 Conclusion & Prochaines Étapes</h3>
+                    <p style="text-align: center; margin-top: 1rem; font-size: 1.1rem;">
+                        Le marché de la visualisation de données IA représente une opportunité de <strong>40+ milliards USD</strong> avec un TCAC de <strong>13,6%</strong>. AI Insight Hub est positionné de manière unique pour capturer une part significative du segment SMB/Mid-Market grâce à son approche IA-native et sa simplicité d'utilisation.
+                    </p>
+                    
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.3); border-radius: 8px;">
+                        <h4 style="color: #00f2fe; margin-bottom: 1rem;">Actions Immédiates (30 jours)</h4>
+                        <ul style="margin-left: 2rem; line-height: 2;">
+                            <li>Finaliser MVP avec fonctionnalités core identifiées</li>
+                            <li>Recruter 50 beta testers dans segments cibles</li>
+                            <li>Établir partnerships intégrations prioritaires (3-5)</li>
+                            <li>Lancer programme content marketing (1 article/semaine)</li>
+                            <li>Préparer pitch deck pour seed funding (objectif 500K-1M€)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="prompt">
+                <h2 class="section-title">7. Prompt IA Utilisé</h2>
+
+                <div class="prompt-box">
+                    <div class="prompt-content">Tu es un expert en étude de marché et en analyse stratégique. Crée un rapport d'étude de marché complet et professionnel au format HTML pour le projet 'AI Insight Hub'.
+
+Contexte du projet :
+- Nom : AI Insight Hub
+- Secteur : SaaS IA pour visualisation de données
+- Propriétaire : Belgareg Mohamed Amine
+
+Structure requise :
+
+1. Introduction
+   - Présentation du projet et proposition de valeur
+   - Statistiques clés en chiffres marquants
+
+2. Analyse du Marché
+   - Taille du marché et croissance prévue
+   - Tendances principales et segments prioritaires
+   - Graphiques : évolution marché, répartition segments
+
+3. Analyse Concurrentielle
+   - Principaux concurrents avec forces/faiblesses
+   - Parts de marché et positionnement
+   - Graphique de comparaison
+
+4. Profil des Clients
+   - Segments cibles et personas
+   - Besoins, problématiques et critères de décision
+   - Graphique radar des besoins
+
+5. Insights & Prévisions
+   - Opportunités de croissance (sectorielle, géographique)
+   - Tendances émergentes à surveiller
+   - Graphique des tendances
+
+6. Recommandations Stratégiques
+   - Positionnement recommandé
+   - Stratégie produit, pricing et go-to-market
+   - Allocation budgétaire avec graphique
+
+Design et présentation :
+- Format HTML moderne avec sidebar de navigation fixe à gauche
+- Design minimaliste noir avec accents cyan (#00f2fe) et bleu (#4facfe)
+- Utiliser Chart.js pour tous les graphiques (inclure CDN)
+- Cards interactives avec hover effects
+- Statistiques en grandes boxes visuelles
+- Responsive mobile avec menu hamburger
+- Smooth scroll entre sections
+- Bouton "back to top"
+
+Style technique :
+- Police : Inter, -apple-system, sans-serif
+- Background : #0a0a0a (noir profond)
+- Texte : #e0e0e0 (gris clair)
+- Accents : gradients cyan-bleu
+- Animations subtiles au scroll
+- Design épuré et professionnel
+
+Contenu :
+- Utilise la recherche web pour données réelles et récentes
+- Chiffres précis et sources crédibles
+- Graphiques fonctionnels avec vraies données
+- Recommandations actionnables et concrètes
+- Ton professionnel mais accessible
+
+Génère le code HTML complet, prêt à être sauvegardé et ouvert dans un navigateur.</div>
+                    <button class="copy-btn" onclick="copyPrompt()">📋 Copier le Prompt</button>
+                </div>
+
+                <div class="card">
+                    <h3>💡 Comment utiliser ce prompt ?</h3>
+                    <p>Ce prompt a été utilisé pour générer ce rapport d'étude de marché complet. Vous pouvez :</p>
+                    <ul style="margin-left: 2rem; margin-top: 1rem; line-height: 2;">
+                        <li><strong>Le copier</strong> et l'adapter pour votre propre projet</li>
+                        <li><strong>Le partager</strong> dans des projets d'IA générative</li>
+                        <li><strong>L'utiliser</strong> avec Claude, ChatGPT ou d'autres LLMs</li>
+                        <li><strong>Le modifier</strong> selon vos besoins spécifiques (secteur, design, etc.)</li>
+                    </ul>
+                    
+                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0, 242, 254, 0.1); border-radius: 8px;">
+                        <strong style="color: #00f2fe;">🔑 Éléments clés du prompt :</strong>
+                        <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                            <li>Structure claire et détaillée</li>
+                            <li>Spécifications de design précises</li>
+                            <li>Demande de données réelles via recherche web</li>
+                            <li>Instructions techniques (Chart.js, responsive, etc.)</li>
+                            <li>Ton et style souhaités</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        
+        if (mobileMenuBtn && sidebar) {
+            mobileMenuBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        // Close sidebar on link click (mobile)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768 && sidebar) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+
+        // Smooth Scroll & Active Link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (backToTop) {
+                if (window.pageYOffset > 300) {
+                    backToTop.style.display = 'flex';
+                } else {
+                    backToTop.style.display = 'none';
+                }
+            }
+        });
+        
+        if (backToTop) {
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // Copy Prompt Function
+        function copyPrompt() {
+            const promptText = document.querySelector('.prompt-content').textContent;
+            navigator.clipboard.writeText(promptText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copié !';
+                btn.style.background = '#00f2fe';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = 'linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)';
+                }, 2000);
+            });
+        }
+
+        // Wait for Chart.js to load
+        window.addEventListener('load', function() {
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js not loaded');
+                return;
+            }
+
+            // Charts Configuration
+            Chart.defaults.color = '#888';
+            Chart.defaults.borderColor = '#222';
+
+            // 1. Market Growth Chart
+            const ctx1 = document.getElementById('marketGrowthChart');
+            if (ctx1) {
+                new Chart(ctx1.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['2024', '2025', '2026', '2027', '2028', '2030', '2032', '2035'],
+                        datasets: [{
+                            label: 'Taille du Marché (Milliards USD)',
+                            data: [9.75, 11.13, 12.64, 14.36, 16.31, 21.17, 27.49, 40.16],
+                            borderColor: '#00f2fe',
+                            backgroundColor: 'rgba(0, 242, 254, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            pointBackgroundColor: '#00f2fe'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: true, position: 'top' },
+                            tooltip: {
+                                backgroundColor: '#1a1a1a',
+                                titleColor: '#00f2fe',
+                                bodyColor: '#e0e0e0',
+                                borderColor: '#00f2fe',
+                                borderWidth: 1
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: '#222' },
+                                ticks: { callback: value =>  + 'B' }
+                            },
+                            x: { grid: { color: '#222' } }
+                        }
+                    }
+                });
+            }
+
+            // 2. Segment Distribution Chart
+            const ctx2 = document.getElementById('segmentChart');
+            if (ctx2) {
+                new Chart(ctx2.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Retail & E-commerce', 'Finance & Banking', 'Healthcare', 'Manufacturing', 'IT & Telecom', 'Autres'],
+                        datasets: [{
+                            data: [28, 22, 18, 15, 10, 7],
+                            backgroundColor: ['#00f2fe', '#4facfe', '#00d4ff', '#00b8e6', '#009ccc', '#0080b3'],
+                            borderWidth: 2,
+                            borderColor: '#0a0a0a'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'right', labels: { padding: 20, font: { size: 12 } } },
+                            tooltip: {
+                                backgroundColor: '#1a1a1a',
+                                titleColor: '#00f2fe',
+                                bodyColor: '#e0e0e0',
+                                borderColor: '#00f2fe',
+                                borderWidth: 1,
+                                callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + '%' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 3. Competitor Market Share Chart
+            const ctx3 = document.getElementById('competitorChart');
+            if (ctx3) {
+                new Chart(ctx3.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Microsoft Power BI', 'Tableau', 'Qlik Sense', 'Looker', 'Domo', 'Autres'],
+                        datasets: [{
+                            label: 'Part de Marché (%)',
+                            data: [36, 20, 10, 6, 4, 24],
+                            backgroundColor: ['#00f2fe', '#4facfe', '#00d4ff', '#00b8e6', '#009ccc', '#666'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#1a1a1a',
+                                titleColor: '#00f2fe',
+                                bodyColor: '#e0e0e0',
+                                borderColor: '#00f2fe',
+                                borderWidth: 1
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: '#222' },
+                                ticks: { callback: value => value + '%' }
+                            },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            // 4. Customer Needs Radar Chart
+            const ctx4 = document.getElementById('needsRadarChart');
+            if (ctx4) {
+                new Chart(ctx4.getContext('2d'), {
+                    type: 'radar',
+                    data: {
+                        labels: ['Facilité Usage', 'Prix Abordable', 'IA & Automation', 'Intégrations', 'Temps Réel', 'Support', 'Sécurité'],
+                        datasets: [{
+                            label: 'Importance (Score /10)',
+                            data: [9.2, 8.5, 9.5, 8.8, 9.0, 7.8, 9.3],
+                            backgroundColor: 'rgba(0, 242, 254, 0.2)',
+                            borderColor: '#00f2fe',
+                            pointBackgroundColor: '#00f2fe',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#00f2fe',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: true, position: 'top' },
+                            tooltip: {
+                                backgroundColor: '#1a1a1a',
+                                titleColor: '#00f2fe',
+                                bodyColor: '#e0e0e0',
+                                borderColor: '#00f2fe',
+                                borderWidth: 1
+                            }
+                        },
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 10,
+                                ticks: { stepSize: 2, backdropColor: 'transparent' },
+                                grid: { color: '#222' },
+                                angleLines: { color: '#222' },
+                                pointLabels: { font: { size: 11 } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            const ctx5 = document.getElementById('trendsChart');
+            if (ctx5) {
+                new Chart(ctx5.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['2024', '2025', '2026', '2027'],
+                        datasets: [
+                            {
+                                label: 'IA Conversationnelle',
+                                data: [35, 58, 75, 87],
+                                borderColor: '#00f2fe',
+                                backgroundColor: 'rgba(0, 242, 254, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Analytics en Temps Réel',
+                                data: [65, 77, 85, 92],
+                                borderColor: '#4facfe',
+                                backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Adoption Cloud',
+                                data: [62, 72, 81, 88],
+                                borderColor: '#00d4ff',
+                                backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: true, position: 'top' },
+                            tooltip: {
+                                backgroundColor: '#1a1a1a',
+                                titleColor: '#00f2fe',
+                                bodyColor: '#e0e0e0',
+                                borderColor: '#00f2fe',
+                                borderWidth: 1,
+                                callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + '%' }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: { color: '#222' },
+                                ticks: { callback: value => value + '%' }
+                            },
+                            x: { grid: { color: '#222' } }
+                        }
+                    }
+                });
+            }
+
+            // 6. Budget Allocation Chart
+            const ctx6 = document.getElementById('budgetChart');
+            if (ctx6) {
+                new Chart(ctx6.getContext('2d'), {
+                    type: 'pie',
+                    data: {
+                        labels: ['Développement Produit (40%)', 'Marketing & Acquisition (30%)', 'Sales & Support (15%)', 'Infrastructure & Tech (10%)', 'Légal & Admin (5%)'],
+                        datasets: [{
+                            data: [40, 30, 15, 10, 5],
+                            backgroundColor: ['#00f2fe', '#4facfe', '#00d4ff', '#00b8e6', '#009ccc'],
+                            borderWidth: 2,
+                            borderColor: '#0a0a0a'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'right', labels: { padding: 20, font: { size: 12 } } },
+                            tooltip: {
+                                backgroundColor: '#1a1a1a',
+                                titleColor: '#00f2fe',
+                                bodyColor: '#e0e0e0',
+                                borderColor: '#00f2fe',
+                                borderWidth: 1,
+                                callbacks: { label: ctx => ctx.label }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
